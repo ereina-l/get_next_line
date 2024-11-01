@@ -6,22 +6,28 @@
 /*   By: ereina-l <ereina-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:31:50 by ereina-l          #+#    #+#             */
-/*   Updated: 2024/10/29 12:20:38 by ereina-l         ###   ########.fr       */
+/*   Updated: 2024/11/01 13:25:16 by ereina-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_find_newline(char *s)
+int	ft_find_newline(char *s)
 {
 	while (*s != '\0')
 	{
 		if (*s == 10)
-			return (s);
+			return (1);
 		s++;
+	}
+	if (*s == 0)
+	{
+//		printf("hola encontré un nulo\n");
+		return (1);
 	}
 	return (0);
 }
+
 int	ft_strlen(char *str)
 {
 	int	len;
@@ -33,6 +39,7 @@ int	ft_strlen(char *str)
 	}
 	return (len);
 }
+
 char	*ft_strdup(char *s)
 {
 	size_t		len;
@@ -45,6 +52,7 @@ char	*ft_strdup(char *s)
 	ft_strlcpy(dup, s, len + 1);
 	return (dup);
 }
+
 size_t	ft_strlcpy(char *dst, char *src, size_t size)
 {
 	size_t	i;
@@ -61,6 +69,7 @@ size_t	ft_strlcpy(char *dst, char *src, size_t size)
 	}
 	return ((size_t)ft_strlen((char *)src));
 }
+
 char	*ft_strjoin(char *dest, char *src)
 {
 	int		i;
@@ -76,7 +85,7 @@ char	*ft_strjoin(char *dest, char *src)
 	while (dest[i])
 	{
 		join[i] = dest[i];
-		i++; 
+		i++;
 	}
 	free (dest);
 	j = 0;

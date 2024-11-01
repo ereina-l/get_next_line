@@ -6,7 +6,7 @@
 /*   By: ereina-l <ereina-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:30:33 by ereina-l          #+#    #+#             */
-/*   Updated: 2024/10/29 12:18:50 by ereina-l         ###   ########.fr       */
+/*   Updated: 2024/11/01 13:13:24 by ereina-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_find_newline(char *s);
+int		ft_find_newline(char *s);
 int		ft_strlen(char *str);
 char	*ft_strjoin(char *dest, char *src);
 char	*ft_strdup(char *s);
