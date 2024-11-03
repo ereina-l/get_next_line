@@ -6,13 +6,46 @@
 /*   By: ereina-l <ereina-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:30:03 by ereina-l          #+#    #+#             */
-/*   Updated: 2024/11/01 13:31:57 by ereina-l         ###   ########.fr       */
+/*   Updated: 2024/11/03 12:54:17 by ereina-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+void ft_free(char *ptr)
+{
+        free(ptr);
+        ptr = NULL;
+}
 // len + 2 when allocating memory since we take into account \n and \0
-static char	*ft_get_extract(char *stash)
+static char	*ft_create_stash(int fd, char *stash, char *buffer)
+{
+	int	read_bytes;
+
+	while (1)
+	{
+		read_bytes = read (fd, buffer, BUFFER_SIZE);
+		if (read_bytes < 0)
+			return (free(buffer), NULL);
+		buffer[read_bytes] = '\0';
+		if (!stash) 
+		{
+    		stash = malloc(1);
+    		if (!stash)
+			{
+        		ft_free(buffer);
+        		return (NULL);
+    		}
+    		stash[0] = '\0';
+		}
+		stash = ft_strjoin(stash, buffer);
+		if (!stash)
+			return (ft_free(buffer), NULL);
+		if (ft_find_newline(stash) || read_bytes == 0)
+			break ;
+	}
+	return (stash);	
+}
+static char	*ft_extract_line(char *stash)
 {
 	char	*line;
 	size_t	len;
@@ -44,12 +77,14 @@ static char	*ft_update_stash(char *stash)
 	size_t	start;
 	size_t	i;
 
+	if (!stash)
+		return (NULL);
 	start = 0;
 	while (stash[start] && stash[start] != '\n')
 		start++;
 	if (!stash[start])
 	{
-		free(stash);
+		ft_free(stash);
 		return (NULL);
 	}
 	updated_stash = malloc((ft_strlen(stash) - start) + 1);
@@ -60,41 +95,25 @@ static char	*ft_update_stash(char *stash)
 	while (stash[start])
 		updated_stash[i++] = stash[start++];
 	updated_stash[i] = '\0';
-	free(stash);
+	ft_free(stash);
 	return (updated_stash);
-}
-
-void	*ft_free(char *ptr, void *return_value)
-{
-	free(ptr);
-	return (return_value);
 }
 char	*get_next_line(int fd)
 {
 	static char	*stash;
 	char	*buffer;
 	char	*line;
-	int		read_bytes;
 
 	if (!stash)
 		stash = ft_strdup("");
-	if (fd < 0 || BUFFER_SIZE <= 0 ||
-	!(buffer = malloc((BUFFER_SIZE + 1) * sizeof(char))))
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	while (1)
-	{
-		read_bytes = read (fd, buffer, BUFFER_SIZE);
-		if (read_bytes < 0)
-			return (ft_free(buffer, NULL));
-		buffer[read_bytes] = '\0';
-		stash = ft_strjoin(stash, buffer);
-		if (!stash)
-			return (ft_free(buffer, NULL));
-		if (ft_find_newline(stash) || read_bytes == 0)
-			break ;
-	}
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (NULL);
+	stash = ft_create_stash(fd, stash, buffer);
 	free (buffer);
-	line = ft_get_extract(stash);
+	line = ft_extract_line(stash);
 	stash = ft_update_stash(stash);
 	return (line);
 }

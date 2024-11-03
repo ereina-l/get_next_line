@@ -6,7 +6,7 @@
 /*   By: ereina-l <ereina-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:31:50 by ereina-l          #+#    #+#             */
-/*   Updated: 2024/11/01 13:25:16 by ereina-l         ###   ########.fr       */
+/*   Updated: 2024/11/03 13:01:29 by ereina-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	ft_find_newline(char *s)
 	}
 	if (*s == 0)
 	{
-//		printf("hola encontré un nulo\n");
 		return (1);
 	}
 	return (0);
