@@ -6,7 +6,7 @@
 /*   By: ereina-l <ereina-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:30:03 by ereina-l          #+#    #+#             */
-/*   Updated: 2024/11/08 17:08:27 by ereina-l         ###   ########.fr       */
+/*   Updated: 2024/11/08 17:18:15 by ereina-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	int		fd;
 	char	*str;
@@ -120,4 +120,4 @@ int	main(void)
 	}
 	close(fd);
 	return (0);
-}
+} */
