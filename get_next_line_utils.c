@@ -6,23 +6,24 @@
 /*   By: ereina-l <ereina-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 16:31:50 by ereina-l          #+#    #+#             */
-/*   Updated: 2024/11/03 13:01:29 by ereina-l         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:50:30 by ereina-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_find_newline(char *s)
+int	ft_find_newline(char *s, int c)
 {
-	while (*s != '\0')
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
 	{
-		if (*s == 10)
+		if (s[i] == (char)c)
 			return (1);
-		s++;
-	}
-	if (*s == 0)
-	{
-		return (1);
+		i++;
 	}
 	return (0);
 }
@@ -39,44 +40,12 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
-char	*ft_strdup(char *s)
-{
-	size_t		len;
-	char		*dup;
-
-	len = ft_strlen(s);
-	dup = (char *)malloc((len + 1) * sizeof(char));
-	if (!dup)
-		return (NULL);
-	ft_strlcpy(dup, s, len + 1);
-	return (dup);
-}
-
-size_t	ft_strlcpy(char *dst, char *src, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	if (size > 0)
-	{
-		while (src[i] && i < size - 1)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-	}
-	return ((size_t)ft_strlen((char *)src));
-}
-
 char	*ft_strjoin(char *dest, char *src)
 {
 	int		i;
 	int		j;
 	char	*join;
 
-	if (!dest)
-		return (ft_strdup(src));
 	join = malloc((ft_strlen(dest) + ft_strlen(src) + 1) * sizeof (char));
 	if (!join)
 		return (NULL);
@@ -86,7 +55,7 @@ char	*ft_strjoin(char *dest, char *src)
 		join[i] = dest[i];
 		i++;
 	}
-	free (dest);
+	free(dest);
 	j = 0;
 	while (src[j])
 	{
@@ -98,3 +67,19 @@ char	*ft_strjoin(char *dest, char *src)
 	return (join);
 }
 
+void	*ft_calloc(size_t count, size_t size)
+{
+	char	*ptr;
+	size_t	i;
+
+	i = 0;
+	ptr = (char *)malloc(count * size);
+	if (!ptr)
+		return (NULL);
+	while (i < count * size)
+	{
+		ptr[i] = '\0';
+		i++;
+	}
+	return (ptr);
+}
