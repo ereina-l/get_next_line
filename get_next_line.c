@@ -6,7 +6,7 @@
 /*   By: ereina-l <ereina-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 15:30:03 by ereina-l          #+#    #+#             */
-/*   Updated: 2024/11/08 17:18:15 by ereina-l         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:10:36 by ereina-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*ft_create_stash(int fd, char *stash)
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes < 0)
-			return (free(buffer), NULL);
+			return (free(buffer), free(stash), NULL);
 		buffer[read_bytes] = '\0';
 		stash = ft_strjoin(stash, buffer);
 		if (!stash)
@@ -90,15 +90,6 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (read(fd, 0, 0) < 0)
-	{
-		if (stash != NULL)
-		{
-			free(stash);
-			stash = NULL;
-		}
-		return (NULL);
-	}
 	stash = ft_create_stash(fd, stash);
 	line = ft_extract_line(stash);
 	stash = ft_update_stash(stash);
